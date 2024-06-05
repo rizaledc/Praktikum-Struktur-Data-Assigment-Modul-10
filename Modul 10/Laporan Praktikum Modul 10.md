@@ -1318,10 +1318,6 @@ Algoritma rekursif dan hash table adalah dua konsep penting dalam ilmu komputer 
 
 ## Referensi
 
-[1]	S. Setiawan, R. Manurung, and A. Azurat, “Struktur Data dan Algoritma Dasar-dasar Rekursif Devide and Conquer Mengulang : Maximum Contiguous subsequence,” 2010.
+[1]	I. H. Pratama and A. H. Wijaya, “Teori graf dan implementasinya dalam menentukan rute efektif perjalanan wisata,” pp. 1–10, 2022.
 
-[2]	R. Munir, “Rekursi dan Relasi Rekurens Rekursi,” Rekursi dan Relasi Rekurens, pp. 1–27, 2020.
-
-[3]	I. P. S. I Gede Wira Kusuma Jaya, Ida Bagus Nyoman Wijana Manuaba, Kadek Ryan Wijaya and I. G. A. G. Pratama Wardhana, I Made Andika Saputra, “Jurnal Ilmu Komputer Indonesia ( JIK ) Vol : 5 , No . 2, November 2020 Jurnal Ilmu Komputer Indonesia ( JIK ) Vol : 5 , No . 2 , November 2020 ISSN ( Print ): 2615-2703 , ISSN ( Online ): 2615-2711,” no. 2, pp. 1–13, 2020.
-
-[4]	G. M. Sridevi, M. V. Ramakrishna, and D. V. Ashoka, “Comprehensive Performance Study of Hashing Functions,” Comput. Sci. J. Mold., vol. 31, no. 2, pp. 183–199, 2023, doi: 10.56415/csjm.v31.10.
+[2]	Y. Purwananto, D. Purwitasari, and W. A. Wibowo, “implementasi dan Analisis Algoritma Pencarian Rute Terpendek di Kota Surabaya,” J. Penelit. dan …, vol. 10, no. 2, pp. 94–101, 2005, [Online]. Available: http://ppm.ittelkom.ac.id/jurtel/images/Volume10Desember2005/implementasi dan analisis algoritma pencarian rute terpendek.pdf
