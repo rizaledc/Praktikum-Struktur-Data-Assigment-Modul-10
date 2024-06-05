@@ -135,24 +135,36 @@ Dalam struktur data tree, terdapat beberapa operasi yang memungkinkan manipulasi
 ### 1. Guided 1
 
 ```C++
-#include<iostream>
-using namespace std;
+#include<iostream> // Mengimpor library iostream untuk input-output
+#include<iomanip> // Mengimpor library iomanip untuk format output
+using namespace std; // Menggunakan namespace std untuk memudahkan penggunaan fungsi dari library
 
-// Code ini berfungsi untuk melakukan hitung mundur
-// dari angka yang diinputkan
-void countdown(int n) {
-    if (n == 0) {
-        return; // Hanya perlu 'return;' karena fungsi ini bertipe void
+string simpul[7] = {"ciamis", "Bandung","Bekasi","Tasikmalaya","cianjur","Purwokerto", "Yogyakarta"}; // Array simpul yang berisi nama-nama kota
+
+int busur [7][7] = { // Matriks busur yang merepresentasikan jarak antar kota
+    {0, 7, 8, 0, 0, 0, 0},
+    {0, 0, 5, 0, 9, 15, 0},
+    {0, 5, 0, 9, 5, 0, 0},
+    {0, 0, 0, 2, 4, 0, 8},
+    {3, 0, 0, 1, 0, 0, 0},
+    {0, 0, 7, 0, 0, 9, 4},
+    {0, 0, 0, 0, 8, 0, 0}
+};
+
+void tampilGraph(){ // Fungsi untuk menampilkan graf
+    for(int i = 0; i < 7; i++){ // Iterasi untuk setiap simpul
+        cout<<simpul[i]<<" : "<<endl; // Menampilkan nama kota
+        for(int j = 0; j < 7; j++){ // Iterasi untuk setiap busur
+            if(busur[i][j] != 0 ) // Jika terdapat jarak antar kota
+            cout<<"-->"<<simpul[j]<<" ("<<busur[i][j]<<")"<<endl; // Menampilkan koneksi antar kota beserta jaraknya
+        }
+        cout<<endl; // Baris kosong untuk pemisah
     }
-    cout << n << " "; // Menambahkan spasi untuk pemisah antar angka
-    countdown(n - 1);
 }
 
-int main() {
-    cout << "Rekursif Langsung: ";
-    countdown(5); // 5 merupakan inputnya
-    cout << endl;
-    return 0;
+int main(){ // Fungsi utama
+    tampilGraph(); // Memanggil fungsi tampilGraph untuk menampilkan graf
+    return 0; // Mengembalikan nilai 0 sebagai penanda program berjalan dengan sukses
 }
 ```
 
@@ -161,90 +173,211 @@ int main() {
 #### Bagian 1
 
 ```C++
-#include<iostream>
-using namespace std;
+#include<iostream> // Mengimpor library iostream untuk input-output
+#include<iomanip> // Mengimpor library iomanip untuk format output
+using namespace std; // Menggunakan namespace std untuk memudahkan penggunaan fungsi dari library
 ```
 - #include<iostream>: Mengimpor library standar input-output di C++ yang digunakan untuk operasi input dan output.
+- #include<iomanip>: Mengimport library iomanip untuk mengatur format output.
 - using namespace std;: Memungkinkan kita menggunakan elemen-elemen dalam namespace std (standard) tanpa perlu menuliskan std:: sebelum setiap fungsi atau objek yang berasal dari library standar.
 
 #### Bagian 2
 
 ```C++
-void countdown(int n) {
-    if (n == 0) {
-        return; // Hanya perlu 'return;' karena fungsi ini bertipe void
-    }
-    cout << n << " "; // Menambahkan spasi untuk pemisah antar angka
-    countdown(n - 1);
-}
+string simpul[7] = {"ciamis", "Bandung","Bekasi","Tasikmalaya","cianjur","Purwokerto", "Yogyakarta"}; // Array simpul yang berisi nama-nama kota
 ```
-- Fungsi countdown adalah fungsi rekursif yang bertipe void (tidak mengembalikan nilai).
-Parameter n adalah angka yang akan dihitung mundur.
-- if (n == 0): Basis rekursi, jika n sama dengan 0, fungsi akan berhenti memanggil dirinya sendiri.
-- cout << n << " ";: Menampilkan nilai n diikuti dengan spasi sebagai pemisah.
-- countdown(n - 1);: Memanggil fungsi countdown lagi dengan nilai n dikurangi 1, ini adalah langkah rekursif yang mengurangi nilai n setiap kali fungsi dipanggil.
+
+Mendeklarasikan array string simpul[7] yang berisi nama nama kota di Indonesia.
 
 #### Bagian 3
 
 ```C++
-int main() {
-    cout << "Rekursif Langsung: ";
-    countdown(5); // 5 merupakan inputnya
-    cout << endl;
-    return 0;
+int busur [7][7] = { // Matriks busur yang merepresentasikan jarak antar kota
+    {0, 7, 8, 0, 0, 0, 0},
+    {0, 0, 5, 0, 9, 15, 0},
+    {0, 5, 0, 9, 5, 0, 0},
+    {0, 0, 0, 2, 4, 0, 8},
+    {3, 0, 0, 1, 0, 0, 0},
+    {0, 0, 7, 0, 0, 9, 4},
+    {0, 0, 0, 0, 8, 0, 0}
+};
+```
+
+int busur[7][7]: Matriks berukuran 7x7 yang merepresentasikan jarak antar kota. Nilai 0 menunjukkan tidak ada koneksi langsung antar kota.
+
+#### Bagian 4
+
+```C++
+void tampilGraph(){ // Fungsi untuk menampilkan graf
+    for(int i = 0; i < 7; i++){ // Iterasi untuk setiap simpul
+        cout<<simpul[i]<<" : "<<endl; // Menampilkan nama kota
+        for(int j = 0; j < 7; j++){ // Iterasi untuk setiap busur
+            if(busur[i][j] != 0 ) // Jika terdapat jarak antar kota
+            cout<<"-->"<<simpul[j]<<" ("<<busur[i][j]<<")"<<endl; // Menampilkan koneksi antar kota beserta jaraknya
+        }
+        cout<<endl; // Baris kosong untuk pemisah
+    }
+}
+```
+
+void tampilGraph(): Fungsi untuk menampilkan graf yang berisi koneksi antar kota beserta jaraknya.
+- for(int i = 0; i < 7; i++): Iterasi untuk setiap simpul (kota).
+- cout<<simpul[i]<<" : "<<endl;: Menampilkan nama kota.
+- for(int j = 0; j < 7; j++): Iterasi untuk setiap busur (koneksi antar kota).
+- if(busur[i][j] != 0): Memeriksa apakah ada koneksi antar kota.
+- cout<<"-->"<<simpul[j]<<" ("<<busur[i][j]<<")"<<endl;: Menampilkan koneksi antar kota beserta jaraknya.
+
+#### Bagian 5
+
+```C++
+int main(){ // Fungsi utama
+    tampilGraph(); // Memanggil fungsi tampilGraph untuk menampilkan graf
+    return 0; // Mengembalikan nilai 0 sebagai penanda program berjalan dengan sukses
 }
 ```
 
 Fungsi main atau fungsi utama ini merupakan fungsi yang pertama kali akan dieksekusi dalam program. Pada main terdapat berbagai fungsi yang telah dibuat sebelumnya sehingga pada main hanya tinggal mengatur saja posisi fungsi yang telah di buat.
 
-- cout << "Rekursif Langsung: ";: Menampilkan teks "Rekursif Langsung: " di layar.
-- countdown(5);: Memanggil fungsi countdown dengan nilai awal 5.
-- cout << endl;: Menambahkan baris baru setelah semua angka ditampilkan.
-- return 0;: Mengakhiri fungsi main dengan mengembalikan nilai 0, yang menandakan bahwa program berakhir tanpa error.
+- tampilGraph();: Memanggil fungsi tampilGraph untuk menampilkan graf.
+- return 0;: Mengembalikan nilai 0 sebagai tanda bahwa program berjalan dengan sukses.
 
 #### Full Code Screenshot
 
 <p align="center">
-  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-9/blob/main/Modul%209/output/CodeGuid1.png" alt="Alt Text">
+  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-10/blob/main/Modul%2010/SS/Guided1.png" alt="Alt Text">
 </p>
 
 #### Screenshot Output
 
 <p align="center">
-  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-9/blob/main/Modul%209/output/OUTGUIDED1.png" alt="Alt Text">
+  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-10/blob/main/Modul%2010/SS/OutputGuided1.png" alt="Alt Text">
 </p>
 
 #### Penjelasan
 
-Output dari program diatas akan menampilkan output "Rekursif Langsung: 5 4 3 2 1" yang merupakan hasil dari hitung mundur dari 5 hingga 1 menggunakan pendekatan rekursif.
+Output dari program diatas akan menampilkan output Jarak dari kota-kota yang ada berdasarkan nilai yang telah di deklarasikan dalam matriks.
 
 ### 2. Guided 2
 
 ```C++
 #include<iostream>
+#include<iomanip> // Menambahkan library iomanip untuk format output
 using namespace std;
 
-void functionB(int n); // Deklarasi fungsi functionB
+struct pohon {
+    pohon * kanan;
+    char data;
+    pohon * kiri;
+};
 
-void functionA(int n) {
-    if (n > 0) {
-        cout << n << " ";
-        functionB(n - 1); // Panggilan rekursif tidak langsung
+//Deklarasi variabel global
+pohon * simpul;
+pohon * root;
+pohon * saatIni;
+pohon * helperA;
+pohon * helperB;
+pohon * alamat[256];
+
+// Fungsi Inisiasi
+void inisialisasi(){
+    root = NULL;
+    saatIni = NULL;
+    helperA = NULL;
+    helperB = NULL;
+}
+
+// Fungsi membuat simpul baru
+void simpulBaru(char dataMasukkan){
+    simpul = new pohon;
+    simpul->data = dataMasukkan;
+    simpul->kanan = NULL;
+    simpul->kiri = NULL;
+}
+
+//Fungsi membuat simpul akar
+void simpulAkar(){
+    if (root == NULL) {
+        char dataAnda;
+        cout << "Masukkan data akar: ";
+        cin >> dataAnda;
+        simpulBaru(dataAnda);
+        root = simpul;
+        cout << "Simpul akar berhasil dibuat...\n";
+    } else {
+        cout << "Simpul akar sudah ada...\n";
     }
 }
 
-void functionB(int n) {
-    if (n > 0) {
-        cout << n << " ";
-        functionA(n / 2); // Panggilan rekursif tidak langsung
+//Fungsi menambah simpul
+void tambahSimpul() {
+    if (root != NULL) {
+        int i = 1, j = 1, penanda = 0;
+        char dataUser;
+        alamat[i] = root;
+
+        while (penanda == 0 && j < 25) {
+            cout << "Masukkan data kiri : ";
+            cin >> dataUser;
+            if (dataUser != '0') {
+                simpulBaru(dataUser);
+                saatIni = alamat[i];
+                saatIni->kiri = simpul;
+                j++;
+                alamat[j] = simpul;
+            } else {
+                penanda = 1;
+                j++;
+                alamat[j] = NULL;
+            }
+            if (penanda == 0) {
+                cout << "Masukkan data kanan : ";
+                cin >> dataUser;
+                if (dataUser != '0') {
+                    simpulBaru(dataUser);
+                    saatIni = alamat[i];
+                    saatIni->kanan = simpul;
+                    j++;
+                    alamat[j] = simpul;
+                } else {
+                    penanda = 1;
+                    j++;
+                    alamat[j] = NULL;
+                }
+            }
+            i++;
+        }
     }
 }
 
-int main() { // Memperbaiki penulisan 'int main'
-    int num = 5; // Memperbaiki penulisan 'int num = 5'
-    cout << "Rekursif Tidak Langsung: "; // Memperbaiki penulisan string
-    functionA(num);
-    return 0; // Memperbaiki penulisan 'return 0'
+//Fungsi membaca pohon
+void bacaPohon(){
+    if (root != NULL) {
+        int i = 1, n = 1, pencacah = 0;
+        cout << endl;
+        while (alamat[i] != NULL){
+            saatIni = alamat[i];
+            if (saatIni->data < 10) {
+                cout << " " << saatIni->data << " "; // Menambahkan spasi untuk memformat output agar rapi
+            } else {
+                cout << saatIni->data << " ";
+            }
+            pencacah++;
+            if (pencacah == n){
+                cout << endl;
+                n = n * 2;
+                pencacah = 0;
+            }
+            i++;
+        }
+    }
+}
+
+int main(){
+    inisialisasi();
+    simpulAkar();
+    tambahSimpul();
+    bacaPohon();
+    return 0;
 }
 ```
 
