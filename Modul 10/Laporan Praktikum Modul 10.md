@@ -48,12 +48,6 @@ Dari gambar di atas, kita mengetahui ada 3 jenis graf diantaranya:
 - Undirected Graf yang sering disebut dengan graf tidak berarah dimana setiap simpulnya tidak memperhatikan arahnya dan tidak ada panah melainkan hanya garis yang menghubungkan kedua simpul.
 - Weight Graf yang merupakan graf berisi nilai disetiap arah dan jalannya.
      
-  B. Kekurangan
-  
-  1. Rekursif menambah overhead pada call stack.
-  2. Implementasi kurang efisien dalam waktu seperti overhead pemanggilan fungsi.
-  3. Potensi overflow dan bug.
-     
 ### C. Representasi Graf dengan Matriks
 
 <p align="center">
