@@ -15,11 +15,7 @@
 
 ### A. Graph
 
-Graf adalah salah satu materi dalam matematika diskrit, graf digunakan untuk 
-memberikan visualisasi atau gambaran antar objek yang disimbolkan dengan titik dan 
-dihubungkan dengan garis [1]. 
-
-Graph terdiri dari sekumpulan node  yang  dihubungkan dengan sekumpulan arc. Notasi untuk mendeskripsikan suatu graph adalah ( , ), dimana  adalah sekumpulan node (vertex) dan  adalah sekumpulan dari arc (edge) dengan nilai-nilai yang berasosiasi pada setiap node [2]. Berikut ilustrasinya:
+Graf adalah salah satu materi dalam matematika diskrit, graf digunakan untuk memberikan visualisasi atau gambaran antar objek yang disimbolkan dengan titik dan dihubungkan dengan garis [1]. Graph terdiri dari sekumpulan node  yang  dihubungkan dengan sekumpulan arc. Notasi untuk mendeskripsikan suatu graph adalah ( , ), dimana  adalah sekumpulan node (vertex) dan  adalah sekumpulan dari arc (edge) dengan nilai-nilai yang berasosiasi pada setiap node [2]. Berikut ilustrasinya:
 
 <p align="center">
   <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-10/blob/main/Modul%2010/SS/ContohGrap.png" alt="Alt Text">
