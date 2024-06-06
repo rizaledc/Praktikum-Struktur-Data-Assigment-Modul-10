@@ -569,34 +569,102 @@ Pada output di atas, pengguna memasukkan beberapa nilai dimana angka 9 sebagai s
 
 ### 1. Unguided 1
 
-####  Buatlah sebuah program Rekursif Langsung (Direct Recursion) yang menghitung nilai faktorial dari sebuah inputan bilangan bulat positif.
+####  Buatlah program graph dengan menggunakan inputan user untuk menghitung jarak dari sebuah kota ke kota lainnya.
 
 **Kode Program:**
 
 ```C++
 #include <iostream>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <unordered_map>
+using namespace std;
 
-// Fungsi untuk menghitung faktorial menggunakan rekursi langsung
-long long faktorial(int n) {
-    if 
-        (n == 0 || n== 1) 
-        return 1;
-    else // basis rekursi
-        return n * faktorial(n - 1); // rekursi
+vector<string> Rizal_2311110029; // mengganti nama 'simpul' menjadi 'Rizal_2311110029'
+vector<vector<int>> busur;
+unordered_map<string, int> kotaIndex;
+
+// Fungsi untuk mengisi nama-nama kota ke dalam vektor Rizal_2311110029 dan membuat mapping indeks kota
+void isiRizal_2311110029(int jumlahSimpul) { 
+    string namaKota;
+    cout << "Masukkan nama-nama kota:" << endl;
+    cin.ignore(); // untuk mengabaikan karakter newline dari input sebelumnya
+    for (int i = 0; i < jumlahSimpul; i++) {
+        cout << "Nama kota " << i + 1 << ": ";
+        getline(cin, namaKota);
+        Rizal_2311110029.push_back(namaKota);
+        kotaIndex[namaKota] = i; // simpan indeks kota
+    }
+    busur.resize(jumlahSimpul, vector<int>(jumlahSimpul, 0));
+}
+
+void isiBusur() {
+    int jarak;
+    cout << "Masukkan jarak antar kota (0 jika tidak ada jalur langsung):" << endl;
+    for (size_t i = 0; i < Rizal_2311110029.size(); i++) { 
+        for (size_t j = 0; j < Rizal_2311110029.size(); j++) {
+            if (i != j) {
+                cout << "Jarak dari " << Rizal_2311110029[i] << " ke " << Rizal_2311110029[j] << ": ";
+                cin >> jarak;
+                busur[i][j] = jarak;
+            }
+        }
+    }
+}
+
+void tampilGraph() {
+    cout << left << setw(12) << "Kota Asal" << " | ";
+    for (const auto& kota : Rizal_2311110029) {  
+        cout << setw(10) << kota << " | ";
+    }
+    cout << endl;
+
+    for (size_t i = 0; i < Rizal_2311110029.size(); i++) { 
+        cout << left << setw(12) << Rizal_2311110029[i] << " | "; 
+        for (size_t j = 0; j < Rizal_2311110029.size(); j++) {
+            cout << setw(10) << busur[i][j] << " | ";
+        }
+        cout << endl;
+    }
+}
+
+// Fungsi untuk menghitung total jarak perjalanan berdasarkan rute kota yang dipilih
+int hitungJarak(const vector<string>& perjalanan) {
+    int totalJarak = 0;
+    for (size_t i = 0; i < perjalanan.size() - 1; i++) {
+        int asal = kotaIndex[perjalanan[i]];
+        int tujuan = kotaIndex[perjalanan[i + 1]];
+        totalJarak += busur[asal][tujuan];
+    }
+    return totalJarak;
 }
 
 int main() {
-    int angka;
-    std::cout << "Masukkan bilangan bulat positif: ";
-    std::cin >> angka;
+    int jumlahSimpul;
+    cout << "Masukkan jumlah kota: ";
+    cin >> jumlahSimpul;
 
-    // Memastikan bahwa angka adalah positif
-    if (angka < 0) {
-        std::cout << "Faktorial tidak didefinisikan untuk bilangan negatif." << std::endl;
-    } else {
-        long long hasil = faktorial(angka);
-        std::cout << "Hasil Faktorial dari " << angka << " adalah: " << hasil << std::endl;
+    isiRizal_2311110029(jumlahSimpul); 
+    isiBusur();
+    tampilGraph();
+
+    int jumlahPerjalanan;
+    cout << "Masukkan jumlah kota dalam perjalanan: ";
+    cin >> jumlahPerjalanan;
+    vector<string> perjalanan(jumlahPerjalanan);
+    cout << "Masukkan nama-nama kota dalam perjalanan:" << endl;
+    for (int i = 0; i < jumlahPerjalanan; i++) {
+        cout << "Kota " << i + 1 << ": ";
+        cin >> perjalanan[i];
     }
+
+    int jarakTotal = hitungJarak(perjalanan);
+    cout << "Jarak total perjalanan: ";
+    for (const auto& kota : perjalanan) {
+        cout << kota << " ";
+    }
+    cout << "adalah " << jarakTotal << " km" << endl;
 
     return 0;
 }
@@ -608,536 +676,631 @@ int main() {
 
 ```C++
 #include <iostream>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <unordered_map>
+using namespace std;
 ```
 
-Library iostream digunakan untuk menjalankan operasi input dan output pada program. Memungkinkan penggunaan fungsi std::cout dan std::cin.
+- Library iostream digunakan untuk menjalankan operasi input dan output pada program.
+- iomanip untuk manipulasi output
+- vector untuk menggunakan vektor
+- string untuk menggunakan string
+- unordered_map untuk menggunakan hashmap.
+- namespace std digunakan agar tidak perlu mendeklarasikan std lagi di setiap fungsi.
 
 #### Bagian 2
 
 ```C++
-   long long faktorial(int n) {
-       if (n == 0 || n == 1) 
-           return 1;
-       else
-           return n * faktorial(n - 1);
-   }
+vector<string> Rizal_2311110029; // mengganti nama 'simpul' menjadi 'Rizal_2311110029'
+vector<vector<int>> busur;
+unordered_map<string, int> kotaIndex;
 ```
 
-- Fungsi faktorial menerima satu parameter n (bilangan bulat).
-- Fungsi ini menggunakan rekursi untuk menghitung faktorial.
-- Basis rekursinya adalah jika n sama dengan 0 atau 1, maka faktorialnya adalah 1.
-- Jika tidak, fungsi akan memanggil dirinya sendiri dengan argumen n - 1 dan mengalikan hasilnya dengan n.
+Inisiasi variabel global sebagai berikut:
+- Rizal_2311110029 adalah vektor untuk menyimpan nama-nama kota.
+- busur adalah matriks 2D yang menyimpan jarak antar kota.
+- kotaIndex adalah hashmap untuk memetakan nama kota ke indeks dalam vektor Rizal_2311110029.
   
 #### Bagian 3
 
 ```C++
-   int main() {
-       int angka;
-       std::cout << "Masukkan bilangan bulat positif: ";
-       std::cin >> angka;
-
-       if (angka < 0) {
-           std::cout << "Faktorial tidak didefinisikan untuk bilangan negatif." << std::endl;
-       } else {
-           long long hasil = faktorial(angka);
-           std::cout << "Hasil Faktorial dari " << angka << " adalah: " << hasil << std::endl;
-       }
-
-       return 0;
-   }
-```
-
-Fungsi di atas merupakan fungsi main yang berupa fungsi utama di dalam program yang disebut dengan fungsi main. Fungsi main yang pertama di eksekusi dan memengaruhi tampilan output.
-
-- Pengguna diminta untuk memasukkan bilangan bulat positif.
-- Jika bilangan yang dimasukkan negatif, program akan memberikan pesan bahwa faktorial tidak didefinisikan untuk bilangan negatif.
-- Jika bilangan positif, fungsi faktorial dipanggil dengan bilangan tersebut sebagai argumen, dan hasilnya ditampilkan.
-- Fungsi main mengembalikan 0, menandakan bahwa program berakhir tanpa error.
-
-#### Full code Screenshot:
-
-<p align="center">
-  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-9/blob/main/Modul%209/output/CodeUn1.png" alt="Alt Text">
-</p>
-
-#### Screenshot Output
-
-<p align="center">
-  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-9/blob/main/Modul%209/output/OutUn1.png" alt="Alt Text">
-</p>
-
-#### Penjelasan
-
-Output kode di atas sudah di atur juga dalam fungsi main dimana alurnya sebagai berikut: Pengguna diminta memasukkan bilangan bulat positif --> Jika pengguna memasukkan bilangan negatif maka akan keluar pesan tidak dapat didefinisikan --> Jika bilangan yang dimasukkan benar maka akan di eksekusi kodenya --> Hasil di print sebagai output. Jika memasukkan angka 7 maka faktorialnya adalah 5040.
-
-### 2. Unguided 2
-
-####  Buatlah versi program Rekursif Tidak Langsung (Indirect Recursion) dari soal nomor 1 di atas!
-
-**Kode Program:**
-
-```C++
-#include <iostream>
-
-// Deklarasi kedua fungsi terlebih dahulu
-long long faktorialGenap(int n);
-long long faktorialGanjil(int n);
-
-// Fungsi untuk menghitung faktorial bilangan genap
-long long faktorialGenap(int n) {
-    if (n == 0) 
-        return 1; // basis rekursi
-    else
-        return n * faktorialGanjil(n - 1); // memanggil fungsi faktorialGanjil
-}
-
-// Fungsi untuk menghitung faktorial bilangan ganjil
-long long faktorialGanjil(int n) {
-    if (n == 1) 
-        return 1; // basis rekursi
-    else
-        return n * faktorialGenap(n - 1); // memanggil fungsi faktorialGenap
-}
-
-int main() {
-    int angka;
-    std::cout << "Masukkan bilangan bulat positif: ";
-    std::cin >> angka;
-
-    // Memastikan bahwa angka adalah positif
-    if (angka < 0) {
-        std::cout << "Faktorial tidak didefinisikan untuk bilangan negatif." << std::endl;
-    } else {
-        long long hasil;
-        if (angka % 2 == 0) {
-            hasil = faktorialGenap(angka);
-        } else {
-            hasil = faktorialGanjil(angka);
-        }
-        std::cout << "Hasil Faktorial dari " << angka << " adalah: " << hasil << std::endl;
+void isiRizal_2311110029(int jumlahSimpul) {
+    string namaKota;
+    cout << "Masukkan nama-nama kota:" << endl;
+    cin.ignore(); // untuk mengabaikan karakter newline dari input sebelumnya
+    for (int i = 0; i < jumlahSimpul; i++) {
+        cout << "Nama kota " << i + 1 << ": ";
+        getline(cin, namaKota);
+        Rizal_2311110029.push_back(namaKota);
+        kotaIndex[namaKota] = i; // simpan indeks kota
     }
-
-    return 0;
+    busur.resize(jumlahSimpul, vector<int>(jumlahSimpul, 0));
 }
 ```
 
-**Penjelasan:**
-
-#### Bagian 1
-
-```C++
-#include <iostream>
-```
-
-Library iostream digunakan untuk menjalankan operasi input dan output pada program. Memungkinkan penggunaan fungsi std::cout dan std::cin.
-
-#### Bagian 2
-
-```C++
-long long faktorialGenap(int n);
-long long faktorialGanjil(int n);
-```
-
-Dua fungsi ini dideklarasikan terlebih dahulu sebelum definisinya. Fungsi faktorialGenap digunakan untuk menghitung faktorial bilangan genap, dan faktorialGanjil untuk bilangan ganjil.
-
-#### Bagian 3
-
-```C++
-long long faktorialGenap(int n) {
-    if (n == 0) 
-        return 1; // basis rekursi
-    else
-        return n * faktorialGanjil(n - 1); // memanggil fungsi faktorialGanjil
-}
-```
-
-Fungsi ini menghitung faktorial bilangan genap secara rekursif. Jika n adalah 0, fungsi mengembalikan 1 sebagai basis rekursi. Jika tidak, fungsi mengalikan n dengan hasil dari faktorialGanjil(n - 1), sehingga terjadi pemanggilan rekursif antara fungsi faktorialGenap dan faktorialGanjil.
+- Mengisi vektor Rizal_2311110029 dengan nama-nama kota dan memetakan setiap kota ke indeks dalam vektor.
+- Menggunakan cin.ignore() untuk mengabaikan karakter newline yang mungkin tertinggal dari input sebelumnya.
+- getline(cin, namaKota) untuk membaca input kota dari pengguna.
+- kotaIndex[namaKota] = i untuk menyimpan indeks kota dalam hashmap.
+- Menyesuaikan ukuran matriks busur sesuai dengan jumlah kota.
 
 #### Bagian 4
 
 ```C++
-long long faktorialGanjil(int n) {
-    if (n == 1) 
-        return 1; // basis rekursi
-    else
-        return n * faktorialGenap(n - 1); // memanggil fungsi faktorialGenap
+void isiBusur() {
+    int jarak;
+    cout << "Masukkan jarak antar kota (0 jika tidak ada jalur langsung):" << endl;
+    for (size_t i = 0; i < Rizal_2311110029.size(); i++) {
+        for (size_t j = 0; j < Rizal_2311110029.size(); j++) {
+            if (i != j) {
+                cout << "Jarak dari " << Rizal_2311110029[i] << " ke " << Rizal_2311110029[j] << ": ";
+                cin >> jarak;
+                busur[i][j] = jarak;
+            }
+        }
+    }
 }
 ```
 
-Mirip dengan faktorialGenap, fungsi ini menghitung faktorial bilangan ganjil. Jika n adalah 1, fungsi mengembalikan 1 sebagai basis rekursi. Jika tidak, fungsi mengalikan n dengan hasil dari faktorialGenap(n - 1), menciptakan rekursi antara kedua fungsi faktorial.
+- Mengisi matriks busur dengan jarak antar kota yang diinputkan pengguna.
+- Mengisi busur[i][j] dengan jarak dari kota i ke kota j berdasarkan input pengguna.
+- Hanya mengisi jika i != j untuk menghindari pengisian jarak dari kota ke dirinya sendiri.
 
 #### Bagian 5
 
 ```C++
-int main() {
-    int angka;
-    std::cout << "Masukkan bilangan bulat positif: ";
-    std::cin >> angka;
-
-    if (angka < 0) {
-        std::cout << "Faktorial tidak didefinisikan untuk bilangan negatif." << std::endl;
-    } else {
-        long long hasil;
-        if (angka % 2 == 0) {
-            hasil = faktorialGenap(angka);
-        } else {
-            hasil = faktorialGanjil(angka);
-        }
-        std::cout << "Hasil Faktorial dari " << angka << " adalah: " << hasil << std::endl;
+void tampilGraph() {
+    cout << left << setw(12) << "Kota Asal" << " | ";
+    for (const auto& kota : Rizal_2311110029) {
+        cout << setw(10) << kota << " | ";
     }
+    cout << endl;
 
-    return 0;
+    for (size_t i = 0; i < Rizal_2311110029.size(); i++) {
+        cout << left << setw(12) << Rizal_2311110029[i] << " | ";
+        for (size_t j = 0; j < Rizal_2311110029.size(); j++) {
+            cout << setw(10) << busur[i][j] << " | ";
+        }
+        cout << endl;
+    }
 }
 ```
 
-Fungsi di atas merupakan fungsi main yang berupa fungsi utama di dalam program yang disebut dengan fungsi main. Fungsi main yang pertama di eksekusi dan memengaruhi tampilan output.
-
-- Program meminta pengguna memasukkan bilangan bulat positif.
-- Jika bilangan negatif, program akan memberikan pesan bahwa faktorial tidak didefinisikan untuk bilangan negatif.
-- Jika positif, program akan menentukan apakah bilangan tersebut genap atau ganjil dan memanggil fungsi faktorial yang sesuai.
-- Hasilnya kemudian dicetak ke konsol.
-
-Secara keseluruhan, program ini memperlihatkan penggunaan rekursi dan pemisahan fungsi berdasarkan kondisi (genap atau ganjil) untuk menghitung faktorial.
-
-#### Full code Screenshot:
-
-<p align="center">
-  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-9/blob/main/Modul%209/output/CodeUn2.png" alt="Alt Text">
-</p>
-
-#### Screenshot Output
-
-<p align="center">
-  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-9/blob/main/Modul%209/output/OutUn2.png" alt="Alt Text">
-</p>
-
-#### Penjelasan
-
-Pada output di atas akan sama dengan seperti faktorial di unguided 1. Tapi yang membedakannya pada kode. Jika pengguna memasukkan nilai negatif maka output yang keluar adalah tidak dapat didefinisikan. Untuk bilangan bulat positif dibagi menjadi dua kode seperti positif genap dan ganjil. Jika memasukkan nilai faktorial 5 maka hasilnya adalah 120.
-
-### 3. Unguided 3
-
-####  Implementasikan hash table untuk menyimpan data mahasiswa. Setiap mahasiswa memiliki NIM dan nilai. Implementasikan fungsi untuk menambahkan data baru, menghapus data, mencari data berdasarkan NIM, dan mencari data berdasarkan nilai.
-
-**Kode Program:**
-
-```C++
-#include <iostream>
-#include <unordered_map>
-#include <vector>
-#include <list>
-#include <algorithm>
-#include <optional>
-
-using namespace std;
-
-struct Mahasiswa {
-    string NIM;
-    int nilai;
-};
-
-class HashTable {
-private:
-    unordered_map<int, list<Mahasiswa>> table;
-    int size; // Adding size to keep track of the number of buckets
-
-    int hashFunction(string NIM) {
-        int sum = 0;
-        for (char ch : NIM) {
-            sum += ch;
-        }
-        return sum % size; // Using size instead of bucket_count
-    }
-
-public:
-    HashTable(int size) : size(size) {
-        table.rehash(size);
-    }
-
-    void tambahData(Mahasiswa mhs) {
-        int index = hashFunction(mhs.NIM);
-        table[index].push_back(mhs);
-    }
-
-    void hapusData(string NIM) {
-        int index = hashFunction(NIM);
-        auto& chain = table[index];
-        chain.remove_if([NIM](const Mahasiswa& mhs) { return mhs.NIM == NIM; });
-    }
-
-    optional<Mahasiswa> cariDataNIM(string NIM) {
-        int index = hashFunction(NIM);
-        for (auto& mhs : table[index]) {
-            if (mhs.NIM == NIM) {
-                return mhs;
-            }
-        }
-        return nullopt;
-    }
-
-    vector<Mahasiswa> cariDataNilai(int minNilai, int maxNilai) {
-        vector<Mahasiswa> hasil;
-        for (auto& chain : table) {
-            for (auto& mhs : chain.second) {
-                if (mhs.nilai >= minNilai && mhs.nilai <= maxNilai) {
-                    hasil.push_back(mhs);
-                }
-            }
-        }
-        return hasil;
-    }
-
-    void tampilkanMenu() {
-        cout << "1. Tambah Data\n";
-        cout << "2. Hapus Data\n";
-        cout << "3. Cari Data Berdasarkan NIM\n";
-        cout << "4. Cari Data Berdasarkan Nilai\n";
-        cout << "5. Keluar\n";
-        cout << "Masukkan pilihan: ";
-    }
-
-    void tampilkanSubMenuNilai() {
-        cout << "Pilih Rentang Nilai:\n";
-        cout << "1. Nilai kurang dari 80\n";
-        cout << "2. Nilai 80-90\n";
-        cout << "3. Nilai 90-100\n";
-        cout << "Masukkan pilihan: ";
-    }
-};
-
-int main() {
-    HashTable ht(10);
-    int pilihan;
-
-    do {
-        ht.tampilkanMenu();
-        cin >> pilihan;
-        switch (pilihan) {
-            case 1: {
-                Mahasiswa mhsBaru;
-                cout << "Masukkan NIM: ";
-                cin >> mhsBaru.NIM;
-                cout << "Masukkan Nilai: ";
-                cin >> mhsBaru.nilai;
-                ht.tambahData(mhsBaru);
-                break;
-            }
-            case 2: {
-                string NIMHapus;
-                cout << "Masukkan NIM yang akan dihapus: ";
-                cin >> NIMHapus;
-                ht.hapusData(NIMHapus);
-                break;
-            }
-            case 3: {
-                string NIMCari;
-                cout << "Masukkan NIM yang dicari: ";
-                cin >> NIMCari;
-                auto found = ht.cariDataNIM(NIMCari);
-                if (found) {
-                    cout << "NIM: " << found->NIM << ", Nilai: " << found->nilai << endl;
-                } else {
-                    cout << "Data tidak ditemukan." << endl;
-                }
-                break;
-            }
-            case 4: {
-                int subPilihan;
-                ht.tampilkanSubMenuNilai();
-                cin >> subPilihan;
-                vector<Mahasiswa> foundNilai;
-
-                switch (subPilihan) {
-                    case 1:
-                        foundNilai = ht.cariDataNilai(0, 79);
-                        break;
-                    case 2:
-                        foundNilai = ht.cariDataNilai(80, 90);
-                        break;
-                    case 3:
-                        foundNilai = ht.cariDataNilai(91, 100);
-                        break;
-                    default:
-                        cout << "Pilihan tidak valid." << endl;
-                        continue; // Go back to the main menu
-                }
-
-                if (!foundNilai.empty()) {
-                    for (auto& mhs : foundNilai) {
-                        cout << "NIM: " << mhs.NIM << ", Nilai: " << mhs.nilai << endl;
-                    }
-                } else {
-                    cout << "Tidak ada nilai pada rentang ini." << endl;
-                }
-                break;
-            }
-            case 5:
-                cout << "Keluar dari program." << endl;
-                break;
-            default:
-                cout << "Pilihan tidak valid." << endl;
-        }
-    } while (pilihan != 5);
-
-    return 0;
-}
-```
-
-**Penjelasan:**
-
-#### Bagian 1
-
-```C++
-#include <iostream>
-#include <unordered_map>
-#include <vector>
-#include <list>
-#include <algorithm>
-#include <optional>
-
-using namespace std;
-```
-
-- #include <iostream> Digunakan untuk operasi input dan output. Dalam kode ini, iostream digunakan untuk mencetak menu ke konsol dan membaca input dari pengguna menggunakan cin dan cout.
-- #include <unordered_map> Digunakan untuk menyimpan data dalam struktur tabel hash. Dalam kode ini, unordered_map digunakan untuk menyimpan dan mengelola data mahasiswa dengan kunci integer yang dihasilkan oleh fungsi hash dan nilai berupa list dari struktur Mahasiswa.
-- #include <vector> Digunakan untuk menyimpan kumpulan data dalam bentuk array dinamis. Dalam kode ini, vector digunakan untuk menyimpan dan mengembalikan daftar mahasiswa yang memenuhi kriteria pencarian tertentu, seperti dalam fungsi cariDataNilai.
-- #include <list> Digunakan untuk menyimpan data dalam struktur data list yang memungkinkan penyisipan dan penghapusan elemen dengan cepat. Dalam kode ini, list digunakan sebagai nilai dalam unordered_map untuk menyimpan mahasiswa yang memiliki nilai hash yang sama (collision handling).
-- #include <algorithm> Digunakan untuk operasi algoritma umum seperti pencarian dan pengurutan. Dalam kode ini, algorithm digunakan untuk fungsi remove_if yang digunakan dalam metode hapusData untuk menghapus mahasiswa dari list berdasarkan NIM.
-- #include <optional> Digunakan untuk mengembalikan nilai yang mungkin tidak ada. Dalam kode ini, optional digunakan untuk fungsi cariDataNIM yang mungkin tidak menemukan mahasiswa dengan NIM yang dicari, sehingga mengembalikan nullopt jika mahasiswa tidak ditemukan.
-- using namespace std; digunakan agar tidak perlu mendeklarasikan std lagi disetiap fungsinya.
-
-#### Bagian 2
-
-```C++
-struct Mahasiswa {
-    string NIM;
-    int nilai;
-};
-```
-
-Struktur Mahasiswa menyimpan data mahasiswa yang terdiri dari NIM (Nomor Induk Mahasiswa) dan nilai.
-
-#### Bagian 3
-
-```C++
-private:
-    unordered_map<int, list<Mahasiswa>> table;
-    int size;
-
-public:
-    HashTable(int size) : size(size) {
-        table.rehash(size);
-    }
-```
-
-- table: unordered_map yang menggunakan int sebagai kunci dan list dari Mahasiswa sebagai nilai.
-- size: Jumlah bucket dalam hash table.
-- Konstruktor: Menginisialisasi ukuran tabel hash dan mengatur ulang jumlah bucket.
-
-#### Bagian 4
-
-```C++
-int hashFunction(string NIM) {
-    int sum = 0;
-    for (char ch : NIM) {
-        sum += ch;
-    }
-    return sum % size;
-}
-```
-
-Menghitung nilai hash dari NIM dengan menjumlahkan nilai ASCII dari setiap karakter, kemudian di modulo dengan size.
-
-#### Bagian 5
-
-```C++
-void tambahData(Mahasiswa mhs);
-void hapusData(string NIM);
-optional<Mahasiswa> cariDataNIM(string NIM);
-vector<Mahasiswa> cariDataNilai(int minNilai, int maxNilai);
-```
-
-- tambahData: Menambahkan data mahasiswa ke dalam tabel.
-- hapusData: Menghapus data mahasiswa berdasarkan NIM.
-- cariDataNIM: Mencari mahasiswa berdasarkan NIM.
-- cariDataNilai: Mencari semua mahasiswa yang nilainya dalam rentang tertentu.
+- Menampilkan matriks busur dalam format tabel.
+- Menggunakan setw untuk mengatur lebar kolom agar output lebih rapi.
+- Menampilkan nama kota di baris pertama dan kolom pertama, diikuti dengan jarak antar kota.
 
 #### Bagian 6
 
 ```C++
+int hitungJarak(const vector<string>& perjalanan) {
+    int totalJarak = 0;
+    for (size_t i = 0; i < perjalanan.size() - 1; i++) {
+        int asal = kotaIndex[perjalanan[i]];
+        int tujuan = kotaIndex[perjalanan[i + 1]];
+        totalJarak += busur[asal][tujuan];
+    }
+    return totalJarak;
+}
+```
+
+- Menghitung total jarak perjalanan berdasarkan rute kota yang dipilih.
+- Mengambil indeks kota asal dan tujuan dari kotaIndex.
+- Menjumlahkan jarak dari setiap pasangan kota berturut-turut dalam perjalanan.
+
+#### Bagian
+
+```C++
 int main() {
-    HashTable ht(10);
-    int pilihan;
+    int jumlahSimpul;
+    cout << "Masukkan jumlah kota: ";
+    cin >> jumlahSimpul;
 
-    do {
-        ht.tampilkanMenu();
+    isiRizal_2311110029(jumlahSimpul);
+    isiBusur();
+    tampilGraph();
+
+    int jumlahPerjalanan;
+    cout << "Masukkan jumlah kota dalam perjalanan: ";
+    cin >> jumlahPerjalanan;
+    vector<string> perjalanan(jumlahPerjalanan);
+    cout << "Masukkan nama-nama kota dalam perjalanan:" << endl;
+    for (int i = 0; i < jumlahPerjalanan; i++) {
+        cout << "Kota " << i + 1 << ": ";
+        cin >> perjalanan[i];
+    }
+
+    int jarakTotal = hitungJarak(perjalanan);
+    cout << "Jarak total perjalanan: ";
+    for (const auto& kota : perjalanan) {
+        cout << kota << " ";
+    }
+    cout << "adalah " << jarakTotal << " km" << endl;
+
+    return 0;
+}
+```
+
+Fungsi main merupakan fungsi yang pertama kali di eksekusi dalam program. 
+- Meminta jumlah kota (jumlahSimpul) dari pengguna.
+- Memanggil fungsi isiRizal_2311110029 untuk mengisi nama kota dan inisialisasi busur.
+-Memanggil isiBusur untuk mengisi jarak antar kota.
+- Menampilkan matriks busur menggunakan tampilGraph.
+- Meminta jumlah kota dalam perjalanan (jumlahPerjalanan).
+- Membaca nama-nama kota dalam perjalanan.
+- Menghitung total jarak perjalanan menggunakan hitungJarak dan menampilkan hasilnya.
+
+#### Full code Screenshot:
+
+<p align="center">
+  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-10/blob/main/Modul%2010/SS/Unguided1.png" alt="Alt Text">
+</p>
+
+#### Screenshot Output
+
+<p align="center">
+  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-10/blob/main/Modul%2010/SS/OutUnguided1.png" alt="Alt Text">
+</p>
+
+#### Penjelasan
+
+Output kode di atas sudah di atur juga dalam fungsi main dimana alurnya sebagai berikut: Pengguna diminta memasukkan jumlah kota --> Pengguna memasukkan nama-nama kota --> Pengguna memasukkan jarak antar kota --> Data yang di masukkan tampil --> Pengguna memasukkan banyak kota perjalanan --> Tampil jumlah perjalanan.
+
+### 2. Unguided 2
+
+####   Modifikasi guided tree diatas dengan program menu menggunakan input data tree dari user dan tampilkan pada pre-order, inorder, dan post order!
+
+**Kode Program:**
+
+```C++
+#include<iostream>
+#include<iomanip> // Menambahkan library iomanip untuk format output
+using namespace std;
+
+struct pohon {
+    pohon * kanan;
+    char data;
+    pohon * kiri;
+};
+
+// Deklarasi variabel global
+pohon * simpul;
+pohon * root;
+pohon * saatIni;
+pohon * helperA;
+pohon * helperB;
+pohon * alamat[256];
+
+// Fungsi Inisiasi
+void inisialisasi(){
+    root = NULL;
+    saatIni = NULL;
+    helperA = NULL;
+    helperB = NULL;
+}
+
+// Fungsi membuat simpul baru
+void simpulBaru(char dataMasukkan){
+    simpul = new pohon;
+    simpul->data = dataMasukkan;
+    simpul->kanan = NULL;
+    simpul->kiri = NULL;
+}
+
+// Fungsi membuat simpul akar
+void simpulAkar(){
+    if (root == NULL) {
+        char dataAnda;
+        cout << "Masukkan data akar: ";
+        cin >> dataAnda;
+        simpulBaru(dataAnda);
+        root = simpul;
+        cout << "Simpul akar berhasil dibuat...\n";
+    } else {
+        cout << "Simpul akar sudah ada...\n";
+    }
+}
+
+// Fungsi menambah simpul
+void Rizal_2311110029() { // Mengganti nama fungsi tambahSimpul menjadi Rizal_2311110029
+    if (root != NULL) {
+        int i = 1, j = 1, penanda = 0;
+        char dataUser;
+        alamat[i] = root;
+
+        while (penanda == 0 && j < 25) {
+            cout << "Masukkan data kiri : ";
+            cin >> dataUser;
+            if (dataUser != '0') {
+                simpulBaru(dataUser);
+                saatIni = alamat[i];
+                saatIni->kiri = simpul;
+                j++;
+                alamat[j] = simpul;
+            } else {
+                penanda = 1;
+                j++;
+                alamat[j] = NULL;
+            }
+            if (penanda == 0) {
+                cout << "Masukkan data kanan : ";
+                cin >> dataUser;
+                if (dataUser != '0') {
+                    simpulBaru(dataUser);
+                    saatIni = alamat[i];
+                    saatIni->kanan = simpul;
+                    j++;
+                    alamat[j] = simpul;
+                } else {
+                    penanda = 1;
+                    j++;
+                    alamat[j] = NULL;
+                }
+            }
+            i++;
+        }
+    }
+}
+
+// Fungsi membaca pohon
+void bacaPohon(){
+    if (root != NULL) {
+        int i = 1, n = 1, pencacah = 0;
+        cout << endl;
+        while (alamat[i] != NULL){
+            saatIni = alamat[i];
+            if (saatIni->data < 10) {
+                cout << " " << saatIni->data << " "; // Menambahkan spasi untuk memformat output agar rapi
+            } else {
+                cout << saatIni->data << " ";
+            }
+            pencacah++;
+            if (pencacah == n){
+                cout << endl;
+                n = n * 2;
+                pencacah = 0;
+            }
+            i++;
+        }
+    }
+}
+
+// Fungsi untuk menampilkan menu
+void tampilkanMenu() {
+    cout << endl << "Menu:\n";
+    cout << "1. Tampilkan Pre-order\n";
+    cout << "2. Tampilkan In-order\n";
+    cout << "3. Tampilkan Post-order\n";
+    cout << "4. Keluar dari program\n"; // Menambahkan opsi keluar dari program
+    cout << "Pilih menu (1-4): ";
+}
+
+// Fungsi Pre-order
+void preOrder(pohon* node) {
+    if (node != NULL) {
+        cout << node->data << " ";
+        preOrder(node->kiri);
+        preOrder(node->kanan);
+    }
+}
+
+// Fungsi In-order
+void inOrder(pohon* node) {
+    if (node != NULL) {
+        inOrder(node->kiri);
+        cout << node->data << " ";
+        inOrder(node->kanan);
+    }
+}
+
+// Fungsi Post-order
+void postOrder(pohon* node) {
+    if (node != NULL) {
+        postOrder(node->kiri);
+        postOrder(node->kanan);
+        cout << node->data << " ";
+    }
+}
+
+int main(){
+    inisialisasi();
+    simpulAkar();
+    Rizal_2311110029(); 
+    bacaPohon();
+
+    int pilihan = 0;
+    while (pilihan != 4) {
+        tampilkanMenu();
         cin >> pilihan;
+
         switch (pilihan) {
-            case 1: {
-                Mahasiswa mhsBaru;
-                cout << "Masukkan NIM: ";
-                cin >> mhsBaru.NIM;
-                cout << "Masukkan Nilai: ";
-                cin >> mhsBaru.nilai;
-                ht.tambahData(mhsBaru);
+            case 1:
+                cout << "Pre-order traversal: ";
+                preOrder(root);
                 break;
-            }
-            case 2: {
-                string NIMHapus;
-                cout << "Masukkan NIM yang akan dihapus: ";
-                cin >> NIMHapus;
-                ht.hapusData(NIMHapus);
+            case 2:
+                cout << "In-order traversal: ";
+                inOrder(root);
                 break;
-            }
-            case 3: {
-                string NIMCari;
-                cout << "Masukkan NIM yang dicari: ";
-                cin >> NIMCari;
-                auto found = ht.cariDataNIM(NIMCari);
-                if (found) {
-                    cout << "NIM: " << found->NIM << ", Nilai: " << found->nilai << endl;
-                } else {
-                    cout << "Data tidak ditemukan." << endl;
-                }
+            case 3:
+                cout << "Post-order traversal: ";
+                postOrder(root);
                 break;
-            }
-            case 4: {
-                int subPilihan;
-                ht.tampilkanSubMenuNilai();
-                cin >> subPilihan;
-                vector<Mahasiswa> foundNilai;
-
-                switch (subPilihan) {
-                    case 1:
-                        foundNilai = ht.cariDataNilai(0, 79);
-                        break;
-                    case 2:
-                        foundNilai = ht.cariDataNilai(80, 90);
-                        break;
-                    case 3:
-                        foundNilai = ht.cariDataNilai(91, 100);
-                        break;
-                    default:
-                        cout << "Pilihan tidak valid." << endl;
-                        continue; // Go back to the main menu
-                }
-
-                if (!foundNilai.empty()) {
-                    for (auto& mhs : foundNilai) {
-                        cout << "NIM: " << mhs.NIM << ", Nilai: " << mhs.nilai << endl;
-                    }
-                } else {
-                    cout << "Tidak ada nilai pada rentang ini." << endl;
-                }
-                break;
-            }
-            case 5:
-                cout << "Keluar dari program." << endl;
+            case 4:
+                cout << "Keluar dari program. Terima kasih!";
                 break;
             default:
-                cout << "Pilihan tidak valid." << endl;
+                cout << "Pilihan tidak valid.";
         }
-    } while (pilihan != 5);
+    }
+
+    return 0;
+}
+```
+
+**Penjelasan:**
+
+#### Bagian 1
+
+```C++
+#include <iostream>
+#include <iomanip> // Menambahkan library iomanip untuk format output
+using namespace std;
+```
+
+- iostream untuk input/output stream.
+- iomanip untuk manipulasi format output.
+- namespace std digunakan agar tidak mendeklarasikan std lagi di setiap fungsi.
+
+#### Bagian 2
+
+```C++
+struct pohon {
+    pohon *kanan;
+    char data;
+    pohon *kiri;
+};
+```
+
+Mendefinisikan struktur data pohon untuk node dalam pohon biner, yang memiliki pointer ke node kiri dan kanan serta data dalam bentuk karakter.
+
+#### Bagian 3
+
+```C++
+// Deklarasi variabel global
+pohon *simpul;
+pohon *root;
+pohon *saatIni;
+pohon *helperA;
+pohon *helperB;
+pohon *alamat[256];
+```
+
+Deklarasi variabel global:
+- simpul: pointer ke node yang sedang dibuat atau diakses.
+- root: pointer ke root dari pohon.
+- saatIni: pointer ke node yang sedang diakses.
+- helperA, helperB: variabel bantu.
+- alamat[256]: array untuk menyimpan alamat node
+
+#### Bagian 4
+
+```C++
+// Fungsi Inisiasi
+void inisialisasi() {
+    root = NULL;
+    saatIni = NULL;
+    helperA = NULL;
+    helperB = NULL;
+}
+```
+
+Variabel global diinisiasi ke NULL.
+
+#### Bagian 5
+
+```C++
+// Fungsi membuat simpul baru
+void simpulBaru(char dataMasukkan) {
+    simpul = new pohon;
+    simpul->data = dataMasukkan;
+    simpul->kanan = NULL;
+    simpul->kiri = NULL;
+}
+```
+
+Membuat node baru dengan data yang diberikan dan menginisialisasi pointer kiri dan kanan ke NULL.
+
+#### Bagian 6
+
+```C++
+// Fungsi membuat simpul akar
+void simpulAkar() {
+    if (root == NULL) {
+        char dataAnda;
+        cout << "Masukkan data akar: ";
+        cin >> dataAnda;
+        simpulBaru(dataAnda);
+        root = simpul;
+        cout << "Simpul akar berhasil dibuat...\n";
+    } else {
+        cout << "Simpul akar sudah ada...\n";
+    }
+}
+```
+
+Membuat simpul akar jika belum ada root, dan menginisialisasi root dengan node yang baru dibuat.
+
+#### Bagian 7
+
+```C++
+// Fungsi menambah simpul
+void Rizal_2311110029() { // Mengganti nama fungsi tambahSimpul menjadi Rizal_2311110029
+    if (root != NULL) {
+        int i = 1, j = 1, penanda = 0;
+        char dataUser;
+        alamat[i] = root;
+
+        while (penanda == 0 && j < 25) {
+            cout << "Masukkan data kiri : ";
+            cin >> dataUser;
+            if (dataUser != '0') {
+                simpulBaru(dataUser);
+                saatIni = alamat[i];
+                saatIni->kiri = simpul;
+                j++;
+                alamat[j] = simpul;
+            } else {
+                penanda = 1;
+                j++;
+                alamat[j] = NULL;
+            }
+            if (penanda == 0) {
+                cout << "Masukkan data kanan : ";
+                cin >> dataUser;
+                if (dataUser != '0') {
+                    simpulBaru(dataUser);
+                    saatIni = alamat[i];
+                    saatIni->kanan = simpul;
+                    j++;
+                    alamat[j] = simpul;
+                } else {
+                    penanda = 1;
+                    j++;
+                    alamat[j] = NULL;
+                }
+            }
+            i++;
+        }
+    }
+}
+```
+
+- Fungsi Rizal_2311110029: Menambahkan simpul baru ke pohon biner.
+- Meminta pengguna untuk memasukkan data untuk simpul kiri dan kanan dari node yang ada.
+- Menambahkan simpul baru ke posisi kiri atau kanan jika data bukan '0'.
+- Menggunakan array alamat untuk menyimpan referensi ke node yang ditambahkan untuk melanjutkan penambahan simpul.
+
+#### Bagian 8
+
+```C++
+// Fungsi membaca pohon
+void bacaPohon() {
+    if (root != NULL) {
+        int i = 1, n = 1, pencacah = 0;
+        cout << endl;
+        while (alamat[i] != NULL) {
+            saatIni = alamat[i];
+            if (saatIni->data < 10) {
+                cout << " " << saatIni->data << " "; // Menambahkan spasi untuk memformat output agar rapi
+            } else {
+                cout << saatIni->data << " ";
+            }
+            pencacah++;
+            if (pencacah == n) {
+                cout << endl;
+                n = n * 2;
+                pencacah = 0;
+            }
+            i++;
+        }
+    }
+}
+```
+
+- Fungsi bacaPohon: Menampilkan data dari pohon dalam urutan level-order.
+- Menggunakan array alamat untuk menyimpan referensi node pada level tertentu dan menampilkannya secara berurutan.
+- Menambahkan spasi untuk data yang kurang dari 10 untuk format yang rapi.
+
+#### Bagian 9
+
+```C++
+// Fungsi untuk menampilkan menu
+void tampilkanMenu() {
+    cout << endl << "Menu:\n";
+    cout << "1. Tampilkan Pre-order\n";
+    cout << "2. Tampilkan In-order\n";
+    cout << "3. Tampilkan Post-order\n";
+    cout << "4. Keluar dari program\n"; // Menambahkan opsi keluar dari program
+    cout << "Pilih menu (1-4): ";
+}
+```
+
+Menampilkan menu pilihan traversal pohon dan keluar dari program.
+
+#### Bagian 10
+
+```C++
+// Fungsi Pre-order
+void preOrder(pohon* node) {
+    if (node != NULL) {
+        cout << node->data << " ";
+        preOrder(node->kiri);
+        preOrder(node->kanan);
+    }
+}
+
+// Fungsi In-order
+void inOrder(pohon* node) {
+    if (node != NULL) {
+        inOrder(node->kiri);
+        cout << node->data << " ";
+        inOrder(node->kanan);
+    }
+}
+
+// Fungsi Post-order
+void postOrder(pohon* node) {
+    if (node != NULL) {
+        postOrder(node->kiri);
+        postOrder(node->kanan);
+        cout << node->data << " ";
+    }
+}
+```
+
+Membuat Fungsi Traversal:
+- preOrder: Traversal pre-order (root, kiri, kanan).
+- inOrder: Traversal in-order (kiri, root, kanan).
+- postOrder: Traversal post-order (kiri, kanan, root).
+
+#### Bagian
+
+```C++
+int main() {
+    inisialisasi();
+    simpulAkar();
+    Rizal_2311110029();
+    bacaPohon();
+
+    int pilihan = 0;
+    while (pilihan != 4) {
+        tampilkanMenu();
+        cin >> pilihan;
+
+        switch (pilihan) {
+            case 1:
+                cout << "Pre-order traversal: ";
+                preOrder(root);
+                break;
+            case 2:
+                cout << "In-order traversal: ";
+                inOrder(root);
+                break;
+            case 3:
+                cout << "Post-order traversal: ";
+                postOrder(root);
+                break;
+            case 4:
+                cout << "Keluar dari program. Terima kasih!";
+                break;
+            default:
+                cout << "Pilihan tidak valid.";
+        }
+        cout << endl; // Menambahkan baris baru setelah setiap output traversal
+    }
 
     return 0;
 }
@@ -1145,31 +1308,36 @@ int main() {
 
 Fungsi di atas merupakan fungsi main yang berupa fungsi utama di dalam program yang disebut dengan fungsi main. Fungsi main yang pertama di eksekusi dan memengaruhi tampilan output.
 
-- Membuat objek HashTable dengan 10 bucket.
-- Menampilkan menu dan memproses input pengguna untuk melakukan operasi seperti tambah, hapus, dan cari data.
+- Menginisialisasi variabel global dan membuat pohon.
+- Meminta pengguna untuk memasukkan data untuk membuat simpul akar dan simpul tambahan.
+- Menampilkan pohon dalam urutan level-order.
+- Menampilkan menu untuk memilih jenis traversal pohon.
+- Menjalankan loop yang terus meminta input pengguna sampai pengguna memilih untuk keluar (pilihan 4).
+- Memanggil fungsi traversal yang sesuai berdasarkan pilihan pengguna dan menampilkan hasilnya.
 
 #### Full code Screenshot:
 
 <p align="center">
-  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-9/blob/main/Modul%209/output/CodeUn3.png" alt="Alt Text">
+  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-10/blob/main/Modul%2010/SS/Unguided2.png" alt="Alt Text">
 </p>
 
 #### Screenshot Output
 
 <p align="center">
-  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-9/blob/main/Modul%209/output/OutUn3.1.png" alt="Alt Text">
-</p>
-<p align="center">
-  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-9/blob/main/Modul%209/output/OutUn3.2.png" alt="Alt Text">
+  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-10/blob/main/Modul%2010/SS/OutUnguided2.png" alt="Alt Text">
 </p>
 
 #### Penjelasan
 
-Output kode di atas sudah di atur juga dalam fungsi main dimana alurnya sebagai berikut: Pengguna akan melihat 5 buah pilihan --> pengguna dapat memilih --> pilihan 1 untuk menambahkan data --> pilihan 2 untuk menghapus data --> pilihan 3 untuk mencari data dari NIM --> pilihan 4 dapat mencari data berdasarkan rentang nilai --> pilihan 5 menu keluar.
+Pada output di atas pengguna diminta untuk memasukkan data akar (9) lalu pengguna akan memasukkan angka anak anak akar kanan dan kirinya --> Masukkan 0 jika sudah selesai menginputkan --> Tampilan --> Pengguna memilih menu yang ingin di akses --> Tampilan --> Menu 4 untuk keluar program.
 
 ## Kesimpulan
 
-Algoritma rekursif dan hash table adalah dua konsep penting dalam ilmu komputer yang digunakan untuk memecahkan masalah dengan cara yang efisien. Algoritma rekursif, yang melibatkan fungsi atau prosedur yang memanggil dirinya sendiri, menawarkan solusi elegan dan sederhana untuk masalah yang dapat dibagi menjadi sub-masalah yang lebih kecil, meskipun memerlukan penanganan yang cermat terhadap overhead dan potensi overflow. Di sisi lain, hash table menyediakan cara yang sangat efisien untuk penyimpanan dan pengambilan data dengan waktu akses rata-rata O(1), dengan berbagai metode penanganan tabrakan seperti open hashing (chaining) dan closed hashing (open addressing). Meskipun masing-masing metode memiliki kelebihan dan kekurangan, pemilihan yang tepat bergantung pada konteks penggunaan dan karakteristik data yang akan diproses.
+Graf adalah salah satu struktur data fundamental dalam dunia pemrograman yang digunakan untuk merepresentasikan hubungan atau koneksi antara objek. Dalam konteks C++, graf dapat diimplementasikan menggunakan berbagai pendekatan seperti matriks ketetanggaan, daftar ketetanggaan, atau dengan menggunakan kelas dan objek. Kita mengetahui ada 3 jenis graf diantaranya:
+
+- Directed Graf yang sering disebut dengan graf berarah dimana urutan setiap simpulnya memiliki arti dan arah sesuai dengan arah panah yang diberikan.
+- Undirected Graf yang sering disebut dengan graf tidak berarah dimana setiap simpulnya tidak memperhatikan arahnya dan tidak ada panah melainkan hanya garis yang menghubungkan kedua simpul.
+- Weight Graf yang merupakan graf berisi nilai disetiap arah dan jalannya.
 
 ## Referensi
 
