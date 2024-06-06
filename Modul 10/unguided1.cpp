@@ -5,19 +5,19 @@
 #include <unordered_map>
 using namespace std;
 
-vector<string> simpul;
+vector<string> Rizal_2311110029; // mengganti nama 'simpul' menjadi 'Rizal_2311110029'
 vector<vector<int>> busur;
 unordered_map<string, int> kotaIndex;
 
-// Fungsi untuk mengisi nama-nama kota ke dalam vektor simpul dan membuat mapping indeks kota
-void isiSimpul(int jumlahSimpul) {
+// Fungsi untuk mengisi nama-nama kota ke dalam vektor Rizal_2311110029 dan membuat mapping indeks kota
+void isiRizal_2311110029(int jumlahSimpul) { 
     string namaKota;
     cout << "Masukkan nama-nama kota:" << endl;
     cin.ignore(); // untuk mengabaikan karakter newline dari input sebelumnya
     for (int i = 0; i < jumlahSimpul; i++) {
         cout << "Nama kota " << i + 1 << ": ";
         getline(cin, namaKota);
-        simpul.push_back(namaKota);
+        Rizal_2311110029.push_back(namaKota);
         kotaIndex[namaKota] = i; // simpan indeks kota
     }
     busur.resize(jumlahSimpul, vector<int>(jumlahSimpul, 0));
@@ -26,10 +26,10 @@ void isiSimpul(int jumlahSimpul) {
 void isiBusur() {
     int jarak;
     cout << "Masukkan jarak antar kota (0 jika tidak ada jalur langsung):" << endl;
-    for (size_t i = 0; i < simpul.size(); i++) {
-        for (size_t j = 0; j < simpul.size(); j++) {
+    for (size_t i = 0; i < Rizal_2311110029.size(); i++) { 
+        for (size_t j = 0; j < Rizal_2311110029.size(); j++) {
             if (i != j) {
-                cout << "Jarak dari " << simpul[i] << " ke " << simpul[j] << ": ";
+                cout << "Jarak dari " << Rizal_2311110029[i] << " ke " << Rizal_2311110029[j] << ": ";
                 cin >> jarak;
                 busur[i][j] = jarak;
             }
@@ -39,14 +39,14 @@ void isiBusur() {
 
 void tampilGraph() {
     cout << left << setw(12) << "Kota Asal" << " | ";
-    for (const auto& kota : simpul) {
+    for (const auto& kota : Rizal_2311110029) {  
         cout << setw(10) << kota << " | ";
     }
     cout << endl;
 
-    for (size_t i = 0; i < simpul.size(); i++) {
-        cout << left << setw(12) << simpul[i] << " | ";
-        for (size_t j = 0; j < simpul.size(); j++) {
+    for (size_t i = 0; i < Rizal_2311110029.size(); i++) { 
+        cout << left << setw(12) << Rizal_2311110029[i] << " | "; 
+        for (size_t j = 0; j < Rizal_2311110029.size(); j++) {
             cout << setw(10) << busur[i][j] << " | ";
         }
         cout << endl;
@@ -69,7 +69,7 @@ int main() {
     cout << "Masukkan jumlah kota: ";
     cin >> jumlahSimpul;
 
-    isiSimpul(jumlahSimpul);
+    isiRizal_2311110029(jumlahSimpul); 
     isiBusur();
     tampilGraph();
 
