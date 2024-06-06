@@ -387,328 +387,183 @@ int main(){
 
 ```C++
 #include<iostream>
+#include<iomanip> // Menambahkan library iomanip untuk format output
 using namespace std;
 ```
-- #include<iostream>: Mengimpor library standar input-output di C++ yang digunakan untuk operasi input dan output.
-- using namespace std;: Memungkinkan kita menggunakan elemen-elemen dalam namespace std (standard) tanpa perlu menuliskan std:: sebelum setiap fungsi atau objek yang berasal dari library standar.
+
+- #include<iostream> Mengimpor library untuk input dan output.
+- #include<iomanip> Mengimpor library untuk manipulasi format output.
+- using namespace std Menggunakan namespace standar C++ untuk menghindari penggunaan std:: sebelum fungsi-fungsi standar.
 
 #### Bagian 2
 
 ```C++
-   void functionB(int n); // Deklarasi fungsi functionB
+struct pohon {
+    pohon * kanan;
+    char data;
+    pohon * kiri;
+};
 
-   void functionA(int n) {
-       if (n > 0) {
-           cout << n << " ";
-           functionB(n - 1); // Panggilan rekursif tidak langsung
-       }
-   }
-   void functionB(int n) {
-       if (n > 0) {
-           cout << n << " ";
-           functionA(n / 2); // Panggilan rekursif tidak langsung
-       }
-   }
+//Deklarasi variabel global
+pohon * simpul;
+pohon * root;
+pohon * saatIni;
+pohon * helperA;
+pohon * helperB;
+pohon * alamat[256];
 ```
-- Fungsi functionB dideklarasikan sebelum functionA untuk memastikan bahwa ketika functionA memanggil functionB, kompiler sudah mengetahui tentang keberadaan functionB.
-- Fungsi ini mencetak nilai n dan kemudian memanggil functionB dengan nilai n - 1. Ini terus terjadi secara rekursif selama n lebih besar dari 0.
-- Mirip dengan functionA, fungsi ini mencetak nilai n dan memanggil functionA dengan nilai n / 2. Proses ini berlanjut secara rekursif selama n lebih besar dari 0.
+
+- struct pohon: Mendefinisikan struktur pohon biner dengan tiga anggota: pointer ke kiri (kiri), data (data), dan pointer ke kanan (kanan)
+- Deklarasi variabel global yang akan digunakan
 
 #### Bagian 3
 
 ```C++
-   int main() {
-       int num = 5;
-       cout << "Rekursif Tidak Langsung: ";
-       functionA(num);
-       return 0;
-   }
-```
-
-Fungsi main atau fungsi utama ini merupakan fungsi yang pertama kali akan dieksekusi dalam program. Pada main terdapat berbagai fungsi yang telah dibuat sebelumnya sehingga pada main hanya tinggal mengatur saja posisi fungsi yang telah di buat.
-
-- Variabel num diinisiasi dengan 5.
-- Program mencetak string "Rekursif Tidak Langsung: " sebagai pengantar output dari fungsi rekursif.
-- functionA dipanggil dengan nilai awal num (5), memulai proses rekursi.
-- return 0; menandakan bahwa program berakhir dengan sukses.
-
-#### Full Code Screenshot
-
-<p align="center">
-  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-9/blob/main/Modul%209/output/CodeGuid2.png" alt="Alt Text">
-</p>
-
-#### Screenshot Output
-
-<p align="center">
-  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-9/blob/main/Modul%209/output/OUTGUIDED2.png" alt="Alt Text">
-</p>
-
-#### Penjelasan
-
-Output dari program diatas mengilustrasikan bagaimana dua fungsi dapat saling memanggil satu sama lain dalam pola rekursi tidak langsung, mencetak serangkaian nilai berdasarkan pemanggilan rekursif tersebut. Menampilkan output rekursif tidak langsung dengan nilai 5 4 2 1.
-
-### 3. Guided 3
-
-```C++
-#include <iostream>
-#include <string>
-#include <vector>
-using namespace std;
-
-const int TABLE_SIZE = 11; // Ukuran tabel hash
-
-// Kelas untuk menyimpan node hash
-class HashNode {
-public:
-    string name; // Nama kunci
-    string phone_number; // Nomor telepon sebagai nilai
-
-    // Konstruktor untuk inisialisasi nama dan nomor telepon
-    HashNode(string name, string phone_number) {
-        this->name = name;
-        this->phone_number = phone_number;
-    }
-};
-
-// Kelas untuk struktur data hash map
-class HashMap {
-private:
-    vector<HashNode*> table[TABLE_SIZE]; // Array dari vektor untuk tabel hash
-
-public:
-    // Fungsi hash untuk menghitung nilai hash dari kunci
-    int hashFunc(string key) {
-        int hash_val = 0;
-        for (char c : key) {
-            hash_val += c; // Menambahkan nilai ASCII dari setiap karakter
-        }
-        return hash_val % TABLE_SIZE; // Menggunakan modulo untuk mendapatkan indeks
-    }
-
-    // Fungsi untuk memasukkan pasangan kunci-nilai ke dalam hash map
-    void insert(string name, string phone_number) {
-        int hash_val = hashFunc(name); // Menghitung hash dari nama
-        for (auto node : table[hash_val]) {
-            if (node->name == name) {
-                node->phone_number = phone_number; // Update nomor telepon jika nama sudah ada
-                return;
-            }
-        }
-        table[hash_val].push_back(new HashNode(name, phone_number)); // Menambahkan node baru jika nama belum ada
-    }
-
-    // Fungsi untuk menghapus node berdasarkan nama
-    void remove(string name) {
-        int hash_val = hashFunc(name); // Menghitung hash dari nama
-        for (auto it = table[hash_val].begin(); it != table[hash_val].end(); it++) {
-            if ((*it)->name == name) {
-                table[hash_val].erase(it); // Menghapus node
-                return;
-            }
-        }
-    }
-
-    // Fungsi untuk mencari nomor telepon berdasarkan nama
-    string searchByName(string name) {
-        int hash_val = hashFunc(name); // Menghitung hash dari nama
-        for (auto node : table[hash_val]) {
-            if (node->name == name) {
-                return node->phone_number; // Mengembalikan nomor telepon jika ditemukan
-            }
-        }
-        return ""; // Mengembalikan string kosong jika tidak ditemukan
-    }
-
-    // Fungsi untuk mencetak semua isi hash table
-    void print() {
-        for (int i = 0; i < TABLE_SIZE; i++) {
-            cout << i << ": ";
-            for (auto pair : table[i]) {
-                if (pair != nullptr) {
-                    cout << "[" << pair->name << ", " << pair->phone_number << "]"; // Mencetak nama dan nomor telepon
-                }
-            }
-            cout << endl;
-        }
-    }
-};
-
-// Fungsi utama
-int main() {
-    HashMap employee_map;
-    employee_map.insert("Mistah", "1234"); // Memasukkan data
-    employee_map.insert("Pastah", "5678");
-    employee_map.insert("Ghana", "91011");
-
-    // Mencetak nomor telepon berdasarkan nama
-    cout << "Nomer Hp Mistah : " << employee_map.searchByName("Mistah") << endl;
-    cout << "Phone Hp Pastah : " << employee_map.searchByName("Pastah") << endl;
-    cout << "Phone Hp Ghana : " << employee_map.searchByName("Ghana") << endl;
-
-    employee_map.remove("Mistah"); // Menghapus data
-    cout << "Nomer Hp Mistah setelah dihapus : " << employee_map.searchByName("Mistah") << endl << endl;
-
-    cout << "Hash Table : " << endl;
-    employee_map.print(); // Mencetak seluruh hash table
-
-    return 0;
+void inisialisasi(){
+    root = NULL;
+    saatIni = NULL;
+    helperA = NULL;
+    helperB = NULL;
 }
 ```
 
-**Penjelasan:**
-
-#### Bagian 1
-
-```C++
-#include <iostream>
-#include <string>
-#include <vector>
-using namespace std;
-```
-- #include<iostream>: Mengimpor library standar input-output di C++ yang digunakan untuk operasi input dan output.
-- #include<string>: digunakan untuk mengedit serta memanipulasi string di dalam kode.
-- #include<vector>: dapat digunakan untuk memberikan arah dalam kode sebagai vektor.
-- using namespace std;: Memungkinkan kita menggunakan elemen-elemen dalam namespace std (standard) tanpa perlu menuliskan std:: sebelum setiap fungsi atau objek yang berasal dari library standar.
-
-#### Bagian 2
-
-```C++
-const int TABLE_SIZE = 11; // Ukuran tabel hash
-class HashNode {
-public:
-    string name; // Nama kunci
-    string phone_number; // Nomor telepon sebagai nilai
-
-    HashNode(string name, string phone_number) {
-        this->name = name;
-        this->phone_number = phone_number;
-    }
-};
-```
-- Mendefinisikan ukuran tabel hash yang akan digunakan dalam hash map. Deklarasi konstanta TABLE_SIZE = 11.
-- Kelas ini menyimpan data dalam bentuk pasangan kunci (name) dan nilai (phone_number).
-- Konstruktor menginisialisasi objek dengan nama dan nomor telepon yang diberikan.
-
-#### Bagian 3
-
-```C++
-class HashMap {
-private:
-    vector<HashNode*> table[TABLE_SIZE]; // Array dari vektor untuk tabel hash
-  int hashFunc(string key) {
-      int hash_val = 0;
-      for (char c : key) {
-          hash_val += c;
-      }
-      return hash_val % TABLE_SIZE;
-  }
-```
-
-Menghitung nilai hash dari kunci yang diberikan dengan menjumlahkan nilai ASCII dari setiap karakter, kemudian di modulo dengan TABLE_SIZE
+Membuat fungsi inisialisasi(): Menginisialisasi semua pointer global menjadi NULL
 
 #### Bagian 4
 
 ```C++
-  void insert(string name, string phone_number) {
-      int hash_val = hashFunc(name);
-      for (auto node : table[hash_val]) {
-          if (node->name == name) {
-              node->phone_number = phone_number;
-              return;
-          }
-      }
-      table[hash_val].push_back(new HashNode(name, phone_number));
-  }
+void simpulBaru(char dataMasukkan){
+    simpul = new pohon;
+    simpul->data = dataMasukkan;
+    simpul->kanan = NULL;
+    simpul->kiri = NULL;
+}
 ```
 
-Menambahkan pasangan kunci-nilai ke dalam hash map. Jika kunci sudah ada, nilai akan diperbarui.
+Membuat simpul baru dengan data yang diberikan dan menginisialisasi pointer kiri dan kanan menjadi NULL.
 
 #### Bagian 5
 
 ```C++
-  void remove(string name) {
-      int hash_val = hashFunc(name);
-      for (auto it = table[hash_val].begin(); it != table[hash_val].end(); it++) {
-          if ((*it)->name == name) {
-              table[hash_val].erase(it);
-              return;
-          }
-      }
-  }
+void simpulAkar(){
+    if (root == NULL) {
+        char dataAnda;
+        cout << "Masukkan data akar: ";
+        cin >> dataAnda;
+        simpulBaru(dataAnda);
+        root = simpul;
+        cout << "Simpul akar berhasil dibuat...\n";
+    } else {
+        cout << "Simpul akar sudah ada...\n";
+    }
+}
 ```
 
-Menghapus node berdasarkan namanya.
+Meminta pengguna untuk memasukkan data untuk simpul akar jika belum ada simpul akar. Jika sudah ada, menampilkan pesan bahwa simpul akar sudah ada.
 
 #### Bagian 6
 
 ```C++
-  string searchByName(string name) {
-      int hash_val = hashFunc(name);
-      for (auto node : table[hash_val]) {
-          if (node->name == name) {
-              return node->phone_number;
-          }
-      }
-      return "";
-  }
+void tambahSimpul() {
+    if (root != NULL) {
+        int i = 1, j = 1, penanda = 0;
+        char dataUser;
+        alamat[i] = root;
+
+        while (penanda == 0 && j < 25) {
+            cout << "Masukkan data kiri : ";
+            cin >> dataUser;
+            if (dataUser != '0') {
+                simpulBaru(dataUser);
+                saatIni = alamat[i];
+                saatIni->kiri = simpul;
+                j++;
+                alamat[j] = simpul;
+            } else {
+                penanda = 1;
+                j++;
+                alamat[j] = NULL;
+            }
+            if (penanda == 0) {
+                cout << "Masukkan data kanan : ";
+                cin >> dataUser;
+                if (dataUser != '0') {
+                    simpulBaru(dataUser);
+                    saatIni = alamat[i];
+                    saatIni->kanan = simpul;
+                    j++;
+                    alamat[j] = simpul;
+                } else {
+                    penanda = 1;
+                    j++;
+                    alamat[j] = NULL;
+                }
+            }
+            i++;
+        }
+    }
+}
 ```
 
-Mencari nomor telepon berdasarkan nama. Mengembalikan nomor telepon jika ditemukan, atau string kosong jika tidak.
+Menambahkan simpul-simpul baru ke pohon biner. Menggunakan loop untuk meminta pengguna memasukkan data untuk simpul kiri dan kanan dari setiap simpul yang ada. Berhenti jika pengguna memasukkan '0' atau jika jumlah simpul mencapai batas tertentu (25).
 
 #### Bagian 7
 
 ```C++
-  void print() {
-      for (int i = 0; i < TABLE_SIZE; i++) {
-          cout << i << ": ";
-          for (auto pair : table[i]) {
-              if (pair != nullptr) {
-                  cout << "[" << pair->name << ", " << pair->phone_number << "]";
-              }
-          }
-          cout << endl;
-      }
-  }
+void bacaPohon(){
+    if (root != NULL) {
+        int i = 1, n = 1, pencacah = 0;
+        cout << endl;
+        while (alamat[i] != NULL){
+            saatIni = alamat[i];
+            if (saatIni->data < 10) {
+                cout << " " << saatIni->data << " "; // Menambahkan spasi untuk memformat output agar rapi
+            } else {
+                cout << saatIni->data << " ";
+            }
+            pencacah++;
+            if (pencacah == n){
+                cout << endl;
+                n = n * 2;
+                pencacah = 0;
+            }
+            i++;
+        }
+    }
+}
 ```
 
-Digunakan untuk memunculkan (mengeprint) hasil dari hash table.
+Menampilkan data dari setiap simpul dalam pohon biner. Mencetak setiap simpul dalam level yang sama dalam satu baris dan melanjutkan ke baris baru setelah setiap level.
 
 #### Bagian 8
 
 ```C++
-int main() {
-    HashMap employee_map;
-    employee_map.insert("Mistah", "1234");
-    employee_map.insert("Pastah", "5678");
-    employee_map.insert("Ghana", "91011");
-
-    cout << "Nomer Hp Mistah : " << employee_map.searchByName("Mistah") << endl;
-    employee_map.remove("Mistah");
-    cout << "Nomer Hp Mistah setelah dihapus : " << employee_map.searchByName("Mistah") << endl;
-
-    employee_map.print();
+int main(){
+    inisialisasi();
+    simpulAkar();
+    tambahSimpul();
+    bacaPohon();
     return 0;
 }
 ```
 
-Fungsi main atau fungsi utama ini merupakan fungsi yang pertama kali akan dieksekusi dalam program. Pada main terdapat berbagai fungsi yang telah dibuat sebelumnya sehingga pada main hanya tinggal mengatur saja posisi fungsi yang telah di buat. Membuat objek HashMap, memasukkan beberapa data, mencetak, menghapus, dan mencetak ulang untuk menunjukkan fungsi dari hash map.
+Fungsi utama yang menginisialisasi pohon, membuat simpul akar, menambah simpul-simpul, dan kemudian membaca dan menampilkan pohon biner.
 
 #### Full Code Screenshot
 
 <p align="center">
-  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-9/blob/main/Modul%209/output/CodeGuid3.png" alt="Alt Text">
+  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-10/blob/main/Modul%2010/SS/Guided2.png" alt="Alt Text">
 </p>
 
 #### Screenshot Output
 
 <p align="center">
-  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-9/blob/main/Modul%209/output/OUTGUIDED3.png" alt="Alt Text">
+  <img src="https://github.com/rizaledc/Praktikum-Struktur-Data-Assigment-Modul-10/blob/main/Modul%2010/SS/OutputGuided2.png" alt="Alt Text">
 </p>
 
 #### Penjelasan
 
-Output dari program diatas pertamanya memasukkan nomor Mistah, Pastah, dan Ghana. Berikutnya nomor di cetak --> Menghapus nomor Mistah --> Mencetak nomor Mistah setelah di hapus --> Mencetak seluruh isi Hash Table.
+Pada output di atas, pengguna memasukkan beberapa nilai dimana angka 9 sebagai simpul akar dan lainnya sebagai anak kanan dan kiri. Memasukkan nilai 0 di akhir untuk menghentikan kode.
 
 ## Unguided
 
