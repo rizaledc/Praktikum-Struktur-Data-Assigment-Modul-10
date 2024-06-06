@@ -47,7 +47,7 @@ void simpulAkar(){
 }
 
 // Fungsi menambah simpul
-void tambahSimpul() {
+void Rizal_2311110029() { // Mengganti nama fungsi tambahSimpul menjadi Rizal_2311110029
     if (root != NULL) {
         int i = 1, j = 1, penanda = 0;
         char dataUser;
@@ -150,7 +150,7 @@ void postOrder(pohon* node) {
 int main(){
     inisialisasi();
     simpulAkar();
-    tambahSimpul();
+    Rizal_2311110029(); 
     bacaPohon();
 
     int pilihan = 0;
